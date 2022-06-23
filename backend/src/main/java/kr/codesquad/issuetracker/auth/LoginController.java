@@ -27,7 +27,7 @@ public class LoginController {
     }
 
     @GetMapping("/api/test")
-    public LoginResponse test(@RequestParam String code) {
+    public LoginResponse test() {
         return null;
     }
 
