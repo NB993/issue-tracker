@@ -28,6 +28,17 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+          
+      - name: Insert data source information into application.yml
+        run: |
+          sed -i "s|\${MYSQL_HOST}|$MYSQL_HOST|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|\${MYSQL_USERNAME}|$MYSQL_USERNAME|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|\${MYSQL_PASSWORD}|$MYSQL_PASSWORD|g" ./src/main/resources/application-deploy.yml
+        env:
+          MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+          MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
         working-directory: ${{env.working-directory}}
