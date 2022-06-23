@@ -34,6 +34,7 @@ jobs:
           sed -i "s|\${MYSQL_HOST}|$MYSQL_HOST|g" ./src/main/resources/application-deploy.yml
           sed -i "s|\${MYSQL_USERNAME}|$MYSQL_USERNAME|g" ./src/main/resources/application-deploy.yml
           sed -i "s|\${MYSQL_PASSWORD}|$MYSQL_PASSWORD|g" ./src/main/resources/application-deploy.yml
+        working-directory: ${{env.working-directory}}
         env:
           MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
           MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
