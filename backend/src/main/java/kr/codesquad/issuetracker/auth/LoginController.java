@@ -26,4 +26,9 @@ public class LoginController {
         return new LoginResponse(jwt.getJwt(), ResponseMessage.LONGIN_SUCCESS);
     }
 
+    @GetMapping("/api/test")
+    public LoginResponse test(@RequestParam String code) {
+        return null;
+    }
+
 }
