@@ -9,9 +9,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ deploy-BE ]
+    branches: [ deploy-test ]
   pull_request:
-    branches: [ deploy-BE ]
+    branches: [ deploy-test ]
 
 jobs:
   build:
@@ -34,10 +34,19 @@ jobs:
           sed -i "s|\${MYSQL_HOST}|$MYSQL_HOST|g" ./src/main/resources/application-deploy.yml
           sed -i "s|\${MYSQL_USERNAME}|$MYSQL_USERNAME|g" ./src/main/resources/application-deploy.yml
           sed -i "s|\${MYSQL_PASSWORD}|$MYSQL_PASSWORD|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|\${CLIENT_ID}|$CLIENT_ID|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|\${CLIENT_SECRET}|$CLIENT_SECRET|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|\${JWT_ISSUER}|$JWT_ISSUER|g" ./src/main/resources/application-deploy.yml
+          sed -i "s|\${JWT_SECRET}|$JWT_SECRET|g" ./src/main/resources/application-deploy.yml
+        working-directory: ${{env.working-directory}}
         env:
           MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
           MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -67,5 +76,5 @@ jobs:
             sudo docker ps -a -q --filter "name=codesquad-issue-tracker" | grep -q . && docker stop codesquad-issue-tracker && docker rm codesquad-issue-tracker | true
             sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/codesquad-issue-tracker:1.0
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/codesquad-issue-tracker:1.0
-            sudo docker run -d -p 8080:8080 --name codesquad-issue-tracker ${{ secrets.DOCKER_USERNAME }}/codesquad-issue-tracker:1.0 -e MYSQL_HOST=${{ secrets.MYSQL_HOST }} -e MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} -e CLIENT_ID=${{ secrets.CLIENT_ID }} -e CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} -e JWT_ISSUER=${{ secrets.JWT_ISSUER }} -e JWT_SECRET=${{ secrets.JWT_SECRET }}     
+            sudo docker run -d -p 80:8080 --name codesquad-issue-tracker ${{ secrets.DOCKER_USERNAME }}/codesquad-issue-tracker:1.0
             sudo docker rmi -f $(docker images -f "dangling=true" -q) || true
