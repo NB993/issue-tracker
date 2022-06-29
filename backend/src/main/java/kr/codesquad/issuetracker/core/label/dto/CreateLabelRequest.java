@@ -2,9 +2,11 @@ package kr.codesquad.issuetracker.core.label.dto;
 
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 @Getter
+@NoArgsConstructor
 public class CreateLabelRequest {
 
     @NotBlank(message = "레이블 이름은 공백을 입력할 수 없습니다.")
