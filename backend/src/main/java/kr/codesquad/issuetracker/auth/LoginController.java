@@ -16,7 +16,7 @@ public class LoginController {
     private final LoginService loginService;
     private final JWTHandler jwtUtil;
 
-    @GetMapping("/api/login")
+    @GetMapping("/oauth/login")
     public LoginResponse oauthLogin(@RequestParam String code) {
         AccessToken accessToken = loginService.getAccessToken(code);
         GitHubUserInfo gitHubUserInfo = loginService.getGitHubUserInfo(accessToken);
