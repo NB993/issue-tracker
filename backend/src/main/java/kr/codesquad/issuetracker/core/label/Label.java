@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import kr.codesquad.issuetracker.core.issue.Issue;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Label {
 

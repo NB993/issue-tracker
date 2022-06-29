@@ -22,4 +22,9 @@ public class LabelController {
     public void createLabel(@RequestBody @Valid CreateLabelRequest createLabelRequest) {
         labelService.createLabel(createLabelRequest);
     }
+
+    @GetMapping
+    public LabelsResponse getLabels() {
+        return labelService.getLabels();
+    }
 }
